@@ -1,4 +1,4 @@
-HTB-Hard-AD-Web-Writeups
+# HTB-Hard-AD-Web-Writeups
 Welcome to my collection of in-depth write-ups for Hack The Box (HTB) machines! This repository focuses specifically on 'Hard' difficulty machines that challenge skills in both Active Directory (AD) and Web exploitation.
 
 About This Repository
