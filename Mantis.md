@@ -1,7 +1,3 @@
-Of course. I can certainly refine your write-up to give it a more professional and structured feel while preserving the core steps and personal journey of solving the Mantis machine. Here is an improved version.
-
------
-
 ### **Mantis (HTB) Write-Up: From Web Enumeration to Domain Dominance**
 
 This report details the penetration testing process for the "Mantis" machine on the Hack The Box platform. Rated as a "Hard" difficulty machine, Mantis provides a challenging and realistic journey through Active Directory enumeration, web application vulnerability discovery, creative credential decoding, and classic Kerberos exploitation to achieve full system compromise.
