@@ -35,10 +35,21 @@ Based on these findings, the domain names were added to the local `/etc/hosts` f
 ```bash
 echo "10.129.133.141 mantis.htb.local htb.local" | sudo tee -a /etc/hosts
 ```
+![nmap results](images\browser_NK1BbB0yCT.png)
+
+![nmap results](images\browser_Pt03SBCRu2.png)
+
+![nmap results](images\browser_f3CEhzAl9W.png)
 
 #### **Service Enumeration**
 
 Initial enumeration of SMB and LDAP with `enum4linux` confirmed the OS details and that anonymous access was permitted, but yielded no users or shares. However, a more targeted approach against Kerberos using `kerbrute` proved successful in identifying a list of valid domain usernames. This step was crucial as it provided the first piece of the puzzle: a valid username.
+
+![enum4linux results](images\browser_XF4xRqDByM.png)
+
+![enum4linux results](images\browser_A6NJmuZgMg.png)
+
+![kerbute results](images\browser_I2nc2aaF9r.png)
 
 -----
 
@@ -50,6 +61,9 @@ With Active Directory enumeration temporarily exhausted, the focus shifted to th
 
 The web application's root page was sparse. A directory fuzzing tool was used to discover hidden content, which quickly uncovered a directory named `/secure_notes`.
 
+![fuzz results](images\browser_jHm4HyLGSn.png)
+
+
 Navigating to this directory revealed two files:
 
   * `dev_notes_NmQyNDI0NzE2YzVmNTM0MDVmNTA0MDczNzM1NzMwNzI2NDIx.txt.txt`
@@ -57,12 +71,43 @@ Navigating to this directory revealed two files:
 
 The `dev_notes` file contained instructions for setting up an OrchardCMS instance and, more importantly, a binary string presented as "OrchardCMS admin creadentials."
 
+1. Download OrchardCMS
+2. Download SQL server 2014 Express ,create user "admin",and create orcharddb database
+3. Launch IIS and add new website and point to Orchard CMS folder location.
+4. Launch browser and navigate to http://localhost:8080
+5. Set admin password and configure sQL server connection string.
+6. Add blog pages with admin user.
+
+Credentials stored in secure format
+OrchardCMS admin creadentials 010000000110010001101101001000010110111001011111010100000100000001110011011100110101011100110000011100100110010000100001
+SQL Server sa credentials file namez
+
 #### **Credential Decoding: Part 1 (OrchardCMS)**
 
 The binary string was:
 `010000000110010001101101001000010110111001011111010100000100000001110011011100110101011100110000011100100110010000100001`
 
 A simple Python script was used to convert this binary string to its ASCII equivalent, revealing the password for the OrchardCMS administrator.
+
+```python
+binary_string = "010000000110010001101101001000010110111001011111010100000100000001110011011100110101011100110000011100100110010000100001"
+
+if len(binary_string) % 8 != 0:
+    print("Warning: Binary string length is not a multiple of 8. It might be truncated or malformed.")
+
+decoded_chars = []
+for i in range(0, len(binary_string), 8):
+    byte = binary_string[i:i+8]
+    try:
+        decimal_val = int(byte, 2)
+        decoded_chars.append(chr(decimal_val))
+    except ValueError:
+        print(f"Error decoding byte: {byte}. This might indicate invalid binary or a non-ASCII character in a different encoding.")
+        decoded_chars.append("[ERROR]")
+
+decoded_password = "".join(decoded_chars)
+print(f"Decoded potential password: {decoded_password}")
+```
 
 **Decoded Password:** `@dm!n_P@ssW0rd!`
 
@@ -83,11 +128,16 @@ The long string in the filename, `NmQyNDI0NzE2YzVmNTM0MDVmNTA0MDczNzM1NzMwNzI2ND
     # Output: m$$ql_S@_P@ssW0rd!
     ```
 
-This revealed a password for what was likely the SQL Server `sa` account: `m$$ql_S@_P@ssW0rd!`
+
+This revealed a password for what was likely the SQL Server `sa` account: `m$$ql_S@_P@ssW0rd!`but ended up being for admin.
+
+![logged_in results](images\browser_zoT3oS4U8Z.png)
 
 #### **Database Pivot**
 
 Using these credentials (presumably through a database administration feature within OrchardCMS), it was possible to query the backend database. An inspection of the database schema revealed the `Orchard_Users_UserPartRecord` table, which contained user information. Querying this table exposed the credentials for the user `james`.
+
+![table results](images\browser_EVPDMCoWzT.png)
 
 **Discovered Credentials:** `james` / `J@m3s_P@ssW0rd!`
 
@@ -128,6 +178,8 @@ The exploitation process required configuring the local Kerberos client and then
 3.  **Forge Privileged Ticket and Execute:** Impacket's `goldenPAC.py` script was used to leverage MS14-068. The script uses the valid TGT for `james`, injects a forged PAC, and requests a service ticket that grants administrator access. This was then used to launch a command shell on the target.
 
 The script successfully executed, providing an interactive shell with the highest privileges: `NT AUTHORITY\SYSTEM`.
+
+![root proof](images\browser_KvpDLLQlAd.png)
 
 -----
 
