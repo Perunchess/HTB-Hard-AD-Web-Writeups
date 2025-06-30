@@ -31,21 +31,21 @@ Based on these findings, the domain names were added to the local `/etc/hosts` f
 ```bash
 echo "10.129.133.141 mantis.htb.local htb.local" | sudo tee -a /etc/hosts
 ```
-![nmap results](images\browser_NK1BbB0yCT.png)
+![nmap results](images/browser_NK1BbB0yCT.png)
 
-![nmap results](images\browser_Pt03SBCRu2.png)
+![nmap results](images/browser_Pt03SBCRu2.png)
 
-![nmap results](images\browser_f3CEhzAl9W.png)
+![nmap results](images/browser_f3CEhzAl9W.png)
 
 #### **Service Enumeration**
 
 Initial enumeration of SMB and LDAP with `enum4linux` confirmed the OS details and that anonymous access was permitted, but yielded no users or shares. However, a more targeted approach against Kerberos using `kerbrute` proved successful in identifying a list of valid domain usernames. This step was crucial as it provided the first piece of the puzzle: a valid username.
 
-![enum4linux results](images\browser_XF4xRqDByM.png)
+![enum4linux results](images/browser_XF4xRqDByM.png)
 
-![enum4linux results](images\browser_A6NJmuZgMg.png)
+![enum4linux results](images/browser_A6NJmuZgMg.png)
 
-![kerbute results](images\browser_I2nc2aaF9r.png)
+![kerbute results](images/browser_I2nc2aaF9r.png)
 
 -----
 
@@ -57,7 +57,7 @@ With Active Directory enumeration temporarily exhausted, the focus shifted to th
 
 The web application's root page was sparse. A directory fuzzing tool was used to discover hidden content, which quickly uncovered a directory named `/secure_notes`.
 
-![fuzz results](images\browser_jHm4HyLGSn.png)
+![fuzz results](images/browser_jHm4HyLGSn.png)
 
 
 Navigating to this directory revealed two files:
@@ -127,13 +127,13 @@ The long string in the filename, `NmQyNDI0NzE2YzVmNTM0MDVmNTA0MDczNzM1NzMwNzI2ND
 
 This revealed a password for what was likely the SQL Server `sa` account: `m$$ql_S@_P@ssW0rd!`but ended up being for admin.
 
-![logged_in results](images\browser_zoT3oS4U8Z.png)
+![logged_in results](images/browser_zoT3oS4U8Z.png)
 
 #### **Database Pivot**
 
 Using these credentials (presumably through a database administration feature within OrchardCMS), it was possible to query the backend database. An inspection of the database schema revealed the `Orchard_Users_UserPartRecord` table, which contained user information. Querying this table exposed the credentials for the user `james`.
 
-![table results](images\browser_EVPDMCoWzT.png)
+![table results](images/browser_EVPDMCoWzT.png)
 
 **Discovered Credentials:** `james` / `J@m3s_P@ssW0rd!`
 
@@ -175,7 +175,7 @@ The exploitation process required configuring the local Kerberos client and then
 
 The script successfully executed, providing an interactive shell with the highest privileges: `NT AUTHORITY\SYSTEM`.
 
-![root proof](images\browser_KvpDLLQlAd.png)
+![root proof](images/browser_KvpDLLQlAd.png)
 
 -----
 
