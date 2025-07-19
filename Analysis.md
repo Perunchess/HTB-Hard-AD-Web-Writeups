@@ -78,14 +78,14 @@ http://internal.analysis.htb/users/list.php?name=technician)(givenName=technicia
 It returned back same table with the same reuslts meaning that we're on the right way. 
 
 After some researching and enumerating we can sum up inforamtion:
-
+```
 Blind LDAP Injection
 
 "CONTACT_" - false
 "technician" - true
 
 If * is a part of description then next will be ** which will break the query so we have to note that. We can use Burp or python to automate the whole process:
-
+```
 ```
 technician:97NTtl*4QP96Bv
 ```
@@ -217,8 +217,9 @@ net user jdoe
 ```
 Appartient aux groupes locaux                  *Utilisateurs de gesti
 ```
-
+```
 jdoe:7y4Z4^*y9Zzj
+```
 
 ### Phase 6: Command and Control (C2 Channel)
 
