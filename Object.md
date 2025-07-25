@@ -218,9 +218,9 @@ WriteOwner → Domain Admins → Add self to group.
 Lesson: Ownership rights enable instant domain dominance.
 
 ### Reflection
-- **ACLs > Exploits: Domain compromise relied entirely on ACL abuses, not CVEs.
-- **Credential Sprawl: Passwords found in spreadsheets (Engines.xls) enabled lateral movement.
-- **Persistence Blindspot: Logon script modifications went undetected despite granting SYSTEM-level access.
+- **ACLs > Exploits: Domain compromise relied entirely on ACL abuses, not CVEs.**
+- **Credential Sprawl: Passwords found in spreadsheets (Engines.xls) enabled lateral movement.**
+- **Persistence Blindspot: Logon script modifications went undetected despite granting SYSTEM-level access.**
 
 
 
