@@ -16,11 +16,11 @@ This repository isn't just a collection of solutions; it's a **deep dive into th
 
 Forget superficial walkthroughs. Each write-up here is a **meticulous breakdown** of the entire penetration testing journey:
 
-* ** Initial Reconnaissance:** From port scans to service enumeration.
-* ** Foothold Establishment:** Uncovering critical web vulnerabilities and leveraging them for initial access.
-* ** Credential Decoding:** Cracking obscure encodings to reveal hidden secrets.
-* ** Privilege Escalation:** Elevating access to achieve ultimate system or domain control.
-* ** Remediation Insights:** Actionable recommendations to fortify defenses against similar attacks.
+*  Initial Reconnaissance: From port scans to service enumeration.
+*  Foothold Establishment: Uncovering critical web vulnerabilities and leveraging them for initial access.
+*  Credential Decoding: Cracking obscure encodings to reveal hidden secrets.
+*  Privilege Escalation: Elevating access to achieve ultimate system or domain control.
+*  Remediation Insights: Actionable recommendations to fortify defenses against similar attacks.
 
 My goal is to provide **unfiltered, step-by-step explanations** of complex attack chains, showcasing the exact tools, commands, and critical thought processes that lead to success. Whether you're aiming to learn, refine your skills, or just appreciate a well-executed hack, these analyses are designed to be your ultimate guide.
 
