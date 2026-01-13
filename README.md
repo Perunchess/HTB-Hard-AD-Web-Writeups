@@ -1,4 +1,4 @@
-# 🚀 HTB-Hard-AD-Web-Writeups | Conquering Hard Machines
+# HTB-Hard-AD-Web-Writeups | Conquering Hard Machines
 
 ---
 
@@ -12,21 +12,21 @@ This repository isn't just a collection of solutions; it's a **deep dive into th
 
 ---
 
-### 🔥 Why This Repository Rocks 🔥
+###  Why This Repository Rocks 
 
 Forget superficial walkthroughs. Each write-up here is a **meticulous breakdown** of the entire penetration testing journey:
 
-* **⚡ Initial Reconnaissance:** From port scans to service enumeration.
-* **🔓 Foothold Establishment:** Uncovering critical web vulnerabilities and leveraging them for initial access.
-* **🔑 Credential Decoding:** Cracking obscure encodings to reveal hidden secrets.
-* **👑 Privilege Escalation:** Elevating access to achieve ultimate system or domain control.
-* **💡 Remediation Insights:** Actionable recommendations to fortify defenses against similar attacks.
+* ** Initial Reconnaissance:** From port scans to service enumeration.
+* ** Foothold Establishment:** Uncovering critical web vulnerabilities and leveraging them for initial access.
+* ** Credential Decoding:** Cracking obscure encodings to reveal hidden secrets.
+* ** Privilege Escalation:** Elevating access to achieve ultimate system or domain control.
+* ** Remediation Insights:** Actionable recommendations to fortify defenses against similar attacks.
 
 My goal is to provide **unfiltered, step-by-step explanations** of complex attack chains, showcasing the exact tools, commands, and critical thought processes that lead to success. Whether you're aiming to learn, refine your skills, or just appreciate a well-executed hack, these analyses are designed to be your ultimate guide.
 
 ---
 
-### 🏆 Featured Conquests 🏆
+###  Featured Conquests 
 
 Explore the detailed breakdown of my latest victories:
 
@@ -64,13 +64,13 @@ Explore the detailed breakdown of my latest victories:
 * **Description:** A sophisticated Active Directory challenge that begins with an open-source intelligence (OSINT) discovery of a publicly available document. This document contains an unpatched vulnerability and discloses a **default password** used by multiple employees. This single piece of information provides initial access to a Windows PowerShell Web Access (PSWA) portal. The subsequent privilege escalation involves leveraging a misconfigured scheduled task to execute a malicious script as a privileged user, ultimately leading to a full domain compromise.
 
 
-### 🔜 What's Next?
+###  What's Next?
 
 I'm relentlessly pursuing new challenges! Expect more high-quality write-ups covering diverse and advanced AD and Web exploitation scenarios in the near future.
 
 ---
 
-### 🤝 Connect & Contribute
+###  Connect & Contribute
 
 Found a typo? Have a different approach? Or just want to share your own HTB experiences?
 Feel free to **open an issue**, **submit a pull request**, or simply **star this repository** to show your support!
